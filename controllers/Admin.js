@@ -3,7 +3,6 @@ var BaseController = require("./Base"),
     model = new (require("../models/ContentModel")),
     crypto = require("crypto"),
     fs = require("fs");
-var FormData = require('form-data');
 
 module.exports = BaseController.extend({
     name: "Admin",
@@ -103,7 +102,6 @@ module.exports = BaseController.extend({
             }
         }
         if(req.body && req.body.formsubmitted && req.body.formsubmitted === 'yes') {
-            console.log('in submit');
             var data = {
                 title: req.body.title,
                 text: req.body.text,
@@ -112,7 +110,6 @@ module.exports = BaseController.extend({
                 ID: req.body.ID
             }
             model[req.body.ID != '' ? 'update' : 'insert'](data, function(error, objects) {
-                if(error != null) console.log(error);
                 returnTheForm();
             });
         } else {
@@ -127,7 +124,6 @@ module.exports = BaseController.extend({
         }
     },
     handleFileUpload: function(req) {
-        console.log(req);
         if(!req.files || !req.files.picture || !req.files.picture.name) {
             return req.body.currentPicture || '';
         }
